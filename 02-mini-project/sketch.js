@@ -20,26 +20,59 @@ let pipes = [];
 let score = 0;
 let spawnCounter = 0;
 
+let imgBackground, imgPipeBody, imgPipeTop, imgPipeBottom, imgBird;
+let scoreSound, gameOverSound;
+
 const SPAWN_RATE = 90;
 const PIPE_SPEED = 2.5;
 const PIPE_GAP = 120;
 const PIPE_W = 60;
 
-// Game states: "playing" or "gameover" — add more if you need them
-let gameState = "playing";
+// Game states: "start", "playing" or "gameover"
+let gameState = "start";
 
 /* ----------------- Setup & Draw ----------------- */
-function setup() {
+async function setup() {
   createCanvas(480, 640);
+  
+  imgBackground = await loadImage("assets/background.png");
+  imgPipeBody = await loadImage("assets/pipe-body.png");
+  imgPipeTop = await loadImage("assets/pipe-head-top.png");
+  imgPipeBottom = await loadImage("assets/pipe-head-bottom.png");
+  imgBird = await loadImage("assets/bird.png")
+  
+  scoreSound = await loadSound("assets/score-sound.mp3");
+  gameOverSound = await loadSound("assets/game-over-sound.mp3");
+  
   noStroke();
   bird = new Bird(120, height / 2);
-  pipes.push(new Pipe(width + 40));
+  pipes.push(new Pipe(width + 40));  
+
 }
 
 function draw() {
   background(18, 22, 28);
 
+  if (gameState === "start") {
+    image(imgBackground, 0, 0, 480, 640);
+    textSize(48);
+    textAlign(CENTER, CENTER);
+    fill(18, 22, 28);
+    text("START GAME", width/2, height/3);
+
+    // imgaeMode(CENTER) is only applied on imgBird
+    push();
+    imageMode(CENTER);
+    image(imgBird, width/2, height/2.2, 40, 32);
+    pop(); 
+    
+    // How do they start?
+    textSize(18);
+    text("Click on the screen to start the game!", width/2, height/1.6);  
+  }
+
   if (gameState === "playing") {
+    image(imgBackground, 0, 0, 480, 640);
     bird.update();
 
     // Spawn a new pipe every SPAWN_RATE frames, then reset the counter
@@ -56,8 +89,7 @@ function draw() {
       // When the bird hits a pipe, trigger game over
       if (pipes[i].hits(bird)) {
         gameState = "gameover";
-        // What should happen when the game ends?
-        
+        gameOverSound.play();
       }
 
       // When the bird passes a pipe, increment the score
@@ -65,10 +97,8 @@ function draw() {
       if (!pipes[i].passed && pipes[i].x + pipes[i].w < bird.pos.x) {
         // increment score here
         pipes[i].passed = true;
-        if (pipes[i].passed === true){
-          score += 1;
-          console.log(score);
-        }
+        score += 1;
+        scoreSound.play();
       }
 
       if (pipes[i].offscreen()) {
@@ -94,18 +124,21 @@ function draw() {
 
     textSize(28);
     text("Score: " + score, width/2, height/2.4);
+    
     // How do they restart?
     textSize(18);
-    text("Press 'R' to Restart!", width/2, height/1.3);
-    //Maybe use keyPressed here for restart, display yexy "press R to Restart!"
-    //Restart the game ASK FOR HELP HERE!
-    if (key === 'r' || key === 'R') {
-      if (gameState === "gameover"){
-        gameState = "playing";
-      }
+    text("Press 'R' to Restart!", width/2, height/1.6);
     }
-    
   }
+
+// Restart function, resets everything.
+function restart() {
+  pipes = [];
+  score = 0;
+  spawnCounter = 0;
+  bird = new Bird(120, height / 2);
+  pipes.push(new Pipe(width + 40));
+  gameState = "playing"
 }
 
 /* ----------------- Input ----------------- */
@@ -114,7 +147,21 @@ function keyPressed() {
   if (key === UP_ARROW || key === ' ') {
       bird.flap();
     }
-}
+  
+  // Restart the game when r is pressed - call restart()
+  if (gameState === "gameover") {
+    if (key === 'r' || key === 'R') {
+      restart();
+      }
+    }
+  }
+
+// Starts game on click
+function mousePressed() {
+  if (gameState === "start") {
+    gameState = "playing";
+    }
+  }
 
 /* ----------------- Classes ----------------- */
 class Bird {
@@ -153,13 +200,65 @@ class Bird {
       this.pos.y = height - this.r;
       this.vel.y = 0;
       gameState = "gameover";
+      gameOverSound.play();
     }
   }
 
+  // imgaeMode(CENTER) is only applied on imgBird
   show() {
-    fill(255, 205, 80);
-    circle(this.pos.x, this.pos.y, this.r * 2);
-    fill(40);
-    circle(this.pos.x + 6, this.pos.y - 4, 4);
+    push();
+    imageMode(CENTER);
+    image(imgBird, this.pos.x, this.pos.y, 40, this.r * 2);
+    pop();
+  }
+}
+
+class Pipe {
+  constructor(x) {
+    this.x = x;
+    this.w = PIPE_W;
+    this.speed = PIPE_SPEED;
+
+    const margin = 40;
+    const gapY = random(margin, height - margin - PIPE_GAP);
+    this.top = gapY;
+    this.bottom = gapY + PIPE_GAP;
+
+    this.passed = false;
+  }
+
+  update() {
+    this.x -= this.speed;
+  }
+
+  show() {
+    // Top pipe body
+    image(imgPipeBody, this.x, 0, this.w, this.top);
+
+    // Top pipe head
+    image(imgPipeTop, this.x - 5, this.top - 30, this.w + 10, 30);
+
+    // Bottom pipe body
+    image(imgPipeBody, this.x, this.bottom, this.w, height - this.bottom);
+
+    // Bottom pipe head
+    image(imgPipeBottom, this.x - 5, this.bottom, this.w + 10, 30);
+  }
+
+  offscreen() {
+    // 'return' sends a value back to wherever this method was called
+    // We'll cover this properly next week, for now just know it gives back true or false
+    return this.x + this.w < 0;
+  }
+
+  // Checks if the bird overlaps with either pipe rectangle
+  // 1) Is the bird within the pipe's x range?
+  // 2) If yes, is it outside the gap — above the top or below the bottom?
+  hits(bird) {
+    // This method also uses 'return' — coming up next week!
+    const withinX = (bird.pos.x + bird.r > this.x) && (bird.pos.x - bird.r < this.x + this.w);
+    const aboveGap = bird.pos.y - bird.r < this.top;
+    const belowGap = bird.pos.y + bird.r > this.bottom;
+    return withinX && (aboveGap || belowGap);
   }
 }
