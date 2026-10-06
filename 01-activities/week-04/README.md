@@ -1,4 +1,4 @@
-# Week 02 — Conditionals & Loops
+# Week 04 — Blueprints & Objects
 
 <!-- Replace ## with the week number and Topic Name with the week's focus -->
 <!-- You may also refer to each week's slide for the Topic Name -->
@@ -10,8 +10,8 @@
 
 | Activity | What I Made                   |
 | -------- | ----------------------------- |
-| `2a` | Created an interactive sketch with multiple visual modes using conditionals. |
-| `2b` | Created a generative pattern using loops and added interaction to change the output. |
+| `4a` | Modified a sketch using a `Cookie` class and added keyboard interaction. |
+| `4b` | Created a new method beyond `update()` and `show()` and experimented arround with different starting values. |
 
 <!-- Add or remove rows to match the activities for this week. -->
 
@@ -22,21 +22,21 @@
 <!-- A short, informal summary of what you explored across the week's activities. What did you make? What clicked? What didn't?
      A few sentences is all you need — write it like a journal entry, not a report. -->
 
-This week I learned how to use conditionals and loops in p5.js. I experimented with `if`, `else` and `switch` statements to make the sketch react differently depending on different conditions.
+This week I worked with classes and objects in p5.js. I learned how constructors, properties and methods can be used to give objects their own values and behaviours.
 
-I also learned how `for` loops can be used to repeat code efficiently and create patterns. Using modulo helped me alternate between different shapes or values. I found it useful to combine loops and conditionals, since it made it possible to create interactive patterns without writing the same code many times.
+I completed a `Cookie` class with movement and random flavour changes. In the second activity I experimented with multiple `Agent` objects by changing their size and speed. I also made the agents bounce at the edges and added a new method called `grow()` that makes them grow over time.
 
 ---
 
 ### Output
 
-### 2a — Mode Switch
+### 4a — Bake a Cookie
 
-![screenshot](readme-assets/activity2a.gif)
+![screenshot](readme-assets/activity4a.gif)
 
-### 2b — Pattern Making
+### 4b — Objects in Motion
 
-![screenshot](readme-assets/activity2b.gif)
+![screenshot](readme-assets/activity4b.gif)
 
 <!-- Drop a screenshot, photo, or GIF of something you made this week.
      Save it to a readme-assets/ folder inside this week's folder.

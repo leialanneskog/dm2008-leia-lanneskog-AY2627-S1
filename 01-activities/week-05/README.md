@@ -1,4 +1,4 @@
-# Week 02 — Conditionals & Loops
+# Week 05 — Dynamic Systems & Collisions
 
 <!-- Replace ## with the week number and Topic Name with the week's focus -->
 <!-- You may also refer to each week's slide for the Topic Name -->
@@ -10,8 +10,7 @@
 
 | Activity | What I Made                   |
 | -------- | ----------------------------- |
-| `2a` | Created an interactive sketch with multiple visual modes using conditionals. |
-| `2b` | Created a generative pattern using loops and added interaction to change the output. |
+| `5a` | Created multiple moving balls that bounce off the canvas edges and react visually when they collide. |
 
 <!-- Add or remove rows to match the activities for this week. -->
 
@@ -22,21 +21,17 @@
 <!-- A short, informal summary of what you explored across the week's activities. What did you make? What clicked? What didn't?
      A few sentences is all you need — write it like a journal entry, not a report. -->
 
-This week I learned how to use conditionals and loops in p5.js. I experimented with `if`, `else` and `switch` statements to make the sketch react differently depending on different conditions.
+This week I learned how moving objects can interact with each other and with the edges of the canvas. 
 
-I also learned how `for` loops can be used to repeat code efficiently and create patterns. Using modulo helped me alternate between different shapes or values. I found it useful to combine loops and conditionals, since it made it possible to create interactive patterns without writing the same code many times.
+I worked with Boolean conditions to check whether objects were colliding. In my sketch I added several `Ball` objects, made them bounce at the edges, and added a visual highlight when two balls collided.
 
 ---
 
 ### Output
 
-### 2a — Mode Switch
+### 5a — Colliding Circles
 
-![screenshot](readme-assets/activity2a.gif)
-
-### 2b — Pattern Making
-
-![screenshot](readme-assets/activity2b.gif)
+![screenshot](readme-assets/activity5a.gif)
 
 <!-- Drop a screenshot, photo, or GIF of something you made this week.
      Save it to a readme-assets/ folder inside this week's folder.
