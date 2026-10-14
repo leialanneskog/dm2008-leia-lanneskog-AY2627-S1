@@ -1,23 +1,16 @@
 // DM2008 — Activity 8a
-// Type 3: Fade Control (10 min)
+// Type 2: On/Off Control (10 min)
 
-int ledPin = 9;     // must be a PWM pin (~)
-int brightness = 0; // current brightness level (0–255)
-int fadeAmount = 5; // how much brightness changes each step
+// the pin your LED is connected to
+int ledPin = 13;
 
 void setup() {
-  pinMode(ledPin, OUTPUT);
+  pinMode(ledPin, OUTPUT); // tell Arduino this pin will send signals, not receive them
 }
 
 void loop() {
-  analogWrite(ledPin, brightness);
-
-  brightness += fadeAmount;
-
-  // When brightness hits 0 or 255, reverse the direction
-  if (brightness <= 0 || brightness >= 255) {
-    fadeAmount = -fadeAmount;
-  }
-
-  delay(30);
+  digitalWrite(ledPin, HIGH); // LED on
+  delay(500);
+  digitalWrite(ledPin, LOW);  // LED off
+  delay(500);
 }
