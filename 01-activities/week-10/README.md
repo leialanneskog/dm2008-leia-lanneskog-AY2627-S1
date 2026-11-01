@@ -33,7 +33,7 @@ I used an array and a loop to draw multiple shapes and position them next to eac
 
 ![screenshot](readme-assets/activity10.gif)
 
-![screenshot](week-10/activity10-image2.jpg)
+![screenshot](activity10-image2.jpg)
 
 <!-- Drop a screenshot, photo, or GIF of something you made this week.
      Save it to a readme-assets/ folder inside this week's folder.
