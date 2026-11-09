@@ -2,8 +2,6 @@
 //Reference for the code:
 
 //Flow Field Animated by devalladares:
-//https://www.openprocessing.org/sketch/157576
-//devalladares p5.js sketch: 
 //https://editor.p5js.org/devalladares/sketches/I6lV4tmaP 
 
 /* ----------------- Globals ----------------- */
