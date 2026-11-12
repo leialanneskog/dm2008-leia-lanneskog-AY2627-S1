@@ -83,7 +83,7 @@ async function setup() {
     .parent(controlPanel)
     .style("margin", "15px 0 10px 0")
   
-  numSlider = createSlider(500, 4000, 1500, 100);
+  numSlider = createSlider(500, 4000, 4000, 100);
   numSlider.parent(controlPanel);
   numSlider.style("width", "100%");
   numSlider.style("accent-color", "#f5f5fb");
@@ -93,7 +93,7 @@ async function setup() {
     .parent(controlPanel)
     .style("margin", "15px 0 10px 0")
 
-  noiseSlider = createSlider(40, 800, 250, 10);
+  noiseSlider = createSlider(40, 800, 500, 10);
   noiseSlider.parent(controlPanel);
   noiseSlider.style("width", "100%");
   noiseSlider.style("accent-color", "#f5f5fb");
@@ -103,7 +103,7 @@ async function setup() {
     .parent(controlPanel)
     .style("margin", "15px 0 10px 0")
 
-  sizeSlider = createSlider(0.5, 2.5, 1, 0.1);
+  sizeSlider = createSlider(0.5, 2.5, 0.5, 0.1);
   sizeSlider.parent(controlPanel);
   sizeSlider.style("width", "100%");
   sizeSlider.style("accent-color", "#f5f5fb");
@@ -113,7 +113,7 @@ async function setup() {
     .parent(controlPanel)
     .style("margin", "15px 0 10px 0");
 
-  speedSlider = createSlider(0.2, 4, 1, 0.1);
+  speedSlider = createSlider(0.2, 4, 0.2, 0.1);
   speedSlider.parent(controlPanel);
   speedSlider.style("width", "100%");
   speedSlider.style("accent-color", "#f5f5fb");
@@ -166,6 +166,13 @@ function changeEnvironment() {
   // Select colors and sound
   if (environment === "Space") {
     currentPalette = spacePalette;
+    
+    // Default slider values for Space
+    numSlider.value(4000);
+    noiseSlider.value(500);
+    sizeSlider.value(0.5);
+    speedSlider.value(0.2);
+    
     // Stop previous music
     osceanSound.stop();
     sunriseSound.stop();
@@ -175,6 +182,13 @@ function changeEnvironment() {
 
   } else if (environment === "Ocean") {
     currentPalette = oceanPalette;
+
+    // Default slider values for Ocean
+    numSlider.value(3000);
+    noiseSlider.value(100);
+    sizeSlider.value(1.5);
+    speedSlider.value(1);
+
     // Stop previous music
     spaceSound.stop();
     sunriseSound.stop();
@@ -184,6 +198,13 @@ function changeEnvironment() {
 
   } else if (environment === "Sunrise") {
     currentPalette = sunrisePalette;
+
+    // Default slider values for Sunrise
+    numSlider.value(2000);
+    noiseSlider.value(400);
+    sizeSlider.value(1);
+    speedSlider.value(1.5);
+
     // Stop previous music
     spaceSound.stop();
     osceanSound.stop();
